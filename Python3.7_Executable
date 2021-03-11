@@ -1,0 +1,79 @@
+import sys #This command imports various modules that are intrinsically available with Python. The 'sys' module permits the later function of storing the output to a file to occur
+from datetime import datetime #This imports the module required to access the current date and time, so that the storage file for the output of the programme can be clearly labelled
+
+print("Enter the DNA or mRNA sequence you wish to translate \n")
+
+date = str(datetime.now().strftime("%H-%M-%S %d-%m-%Y")) #The purpose of this variable is to generate a date in the appropriate formate for later use in naming the file
+sys.stdout = open("Translation_Data_" + (date) + ".txt", "w") #This opens the sys.stdout function to save all console outputs to a file within the same directory as the programme
+
+codon = input("Enter the DNA or mRNA sequence you wish to translate \n") #This saves the user input of the sequence of bases so that it can be processed
+for i in range (0, len(codon), 1): #This loop function breaks apart the user input (codon) into single bases so that the presence of thymine, or uracil can be identified to class the sequence as a DNA sequence (presence of thymine), or an mRNA sequence (presence of uracil)
+    if codon == "T": #If thymine (T) is present, mRNA is set to a value of 1. This is important in a later function
+        mRNA = 1
+        print("The mRNA has been identified \n") #This helps the user identify whether they are analysing mRNA or DNA
+        break #The break function stops this algorithm from running, and continues the programme to the later processes. Otherwise, if break wasn't included the programme would be stuck here and won't run any other code
+    else:
+        mRNA = 0 #If the former statement is not met, this statement is executed instead
+        print("The DNA has been identified \n")
+        break
+
+print("----------DNA/ mRNA input---------- \n" + (codon) + "\n" + "----------Translated amino acid sequence----------")
+
+for i in range (0, len(codon), 3): #This is a loop function which breaks the user inputted base sequence into three base segments. This is because during translation, the base sequence is read in three's known as 'triplets'
+    triplet = codon[i:i + 3] #The loop will continue to execute the function by choosing the succeeding triplet as each prior triplet has finished being read. Each three base sequence is assigned to the variable 'triplet'
+    if triplet in ("ATG"): #If the variable 'triplet' is equal to "ATG" then the programme outputs that this is the sequence for the start codon.
+        print("Start Codon")
+    if triplet in ("TTT", "TTC", "UUU", "UUC"): #The 'in' function is very important when assinging several values (be it a string or an integer) to a single variable
+        print("Phenylalanine")
+    if triplet in ("TTA", "TTG", "CTT", "CTC", "CTA", "CTG", "UUA", "UUG", "CUU", "CUC", "CUA", "CUG"):
+        print("Leucine")
+    if triplet in ("ATT", "ATC", "ATA", "AUU", "AUC", "AUA"):
+        print("Isoleucine")
+    if triplet in ("ATG", "AUG"):
+        print("Methionine")
+    if triplet in ("GTT", "GTC", "GTA", "GTG", "GUU", "GUC", "GUA", "GUG"):
+        print("Valine")
+    if triplet in ("TCT", "TCC", "TCA", "TCG", "UCU", "UCC", "UCA", "UCG"):
+        print("Serine")
+    if triplet in ("CCT", "CCC", "CCA", "CCG", "CCU"):
+        print("Proline")
+    if triplet in ("ACT", "ACC", "ACA", "ACG", "ACU"):
+        print("Threonine")
+    if triplet in ("GCT", "GCC", "GCA", "GCG", "GCU"):
+        print("Alanine")
+    if triplet in ("TAT", "TAC", "UAU", "UAC"):
+        print("Tyrosine")
+    if triplet in ("CAT", "CAC", "CAU", "CAC"):
+        print("Histidine")
+    if triplet in ("CAA", "CAG"):
+        print("Glutamine")
+    if triplet in ("AAT", "AAC", "AAU"):
+        print("Asparagine")
+    if triplet in ("AAA", "AAG"):
+        print("Lysine")
+    if triplet in ("GAT", "GAC", "GAU"):
+        print("Aspartic acid")
+    if triplet in ("GAA", "GAG"):
+        print("Glutamic acid")
+    if triplet in ("TGT", "TGC", "UGU", "UGC"):
+        print("Cysteine")
+    if triplet in ("TGG", "UGG"):
+        print("Tryptophan")
+    if triplet in ("CGT", "CGC", "CGA", "CGG", "CGU"):
+        print("Arginine")
+    if triplet in ("AGT", "AGC", "AGU"):
+        print("Serine")
+    if triplet in ("AGA", "AGG"):
+        print("Arginine")
+    if triplet in ("GGT", "GGC", "GGA", "GGG", "GGU"):
+        print("Glycine")
+    if triplet in ("TAA", "TAG", "TGA", "UAA", "UAG", "UGA"):
+        print("Stop Codon")
+
+print("Your Conversion is complete")
+sys.stdout.close() #This closes the file so that nothing can be written to it anymore, and for the programme to close safely without corrupting the file.
+
+#The source of the codon sequences for each amino acid was retrieved from the following link: https://en.wikipedia.org/wiki/DNA_and_RNA_codon_tables
+
+
+
